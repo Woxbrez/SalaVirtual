@@ -1,7 +1,16 @@
-	package entidade;
+package entidade;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="material")
 public class Material {
 	
+	@Id
+	@GeneratedValue
 	private int codigo;
 	private String nome;
 	private String descricao;

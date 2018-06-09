@@ -2,8 +2,17 @@ package entidade;
 
 import java.util.List;
 
-public class Turma {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="turma")
+public class Turma {
+	
+	@Id
+	@GeneratedValue
 	private int codigo;
 	private Disciplina disciplina;
 	private Professor professor;

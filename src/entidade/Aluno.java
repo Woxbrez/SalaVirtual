@@ -1,7 +1,16 @@
 package entidade;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="aluno")
 public class Aluno {
 	
+	@Id
+	@GeneratedValue
 	private int matricula;
 	private String nome;
 	private String curso;
