@@ -124,74 +124,82 @@ public class ImplementacaoCrud<T> implements InterfaceCrud<T> {
 
 	@Override
 	public void executeUpdateQueryDinamica(String s) throws Exception {
-		// TODO Auto-generated method stub
-
+		validaSessionFactory();
+		sessionFactory.getCurrentSession().createQuery(s).executeUpdate();
+		executeFlushSession();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void executeUpdateSQLDinamica(String s) throws Exception {
-		// TODO Auto-generated method stub
+		validaSessionFactory();
+		sessionFactory.getCurrentSession().createSQLQuery(s).executeUpdate();
+		executeFlushSession();
 
 	}
 
 	@Override
 	public void clearSession() throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().clear();
 
 	}
 
 	@Override
 	public void evict(Object objs) throws Exception {
-		// TODO Auto-generated method stub
+		validaSessionFactory();
+		sessionFactory.getCurrentSession().evict(objs);
 
 	}
 
 	@Override
 	public Session getSession() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		validaSessionFactory();
+		return sessionFactory.getCurrentSession();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public List getListSQLDinamica(String sql) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<?> getListSQLDinamica(String sql) throws Exception {
+		validaSessionFactory();
+		List<?> lista = sessionFactory.getCurrentSession().createSQLQuery(sql).list();
+		return lista;
 	}
 
 	@Override
 	public JdbcTemplate getJdbcTemplate() {
-		// TODO Auto-generated method stub
 		return jdbcTemplate;
 	}
 
 	@Override
 	public SimpleJdbcTemplate getSimpleJdbcTemplate() {
-		// TODO Auto-generated method stub
 		return simpleJdbcTemplate;
 	}
 
 	@Override
 	public SimpleJdbcInsert getSimpleJdbcInsert() {
-		// TODO Auto-generated method stub
 		return simpleJdbcInsert;
 	}
 
 	@Override
 	public Long totalRegistro(String tabela) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sql = new StringBuilder();
+		sql.append("select count(1) from ").append(tabela);
+		return jdbcTemplate.queryForLong(sql.toString());
 	}
 
 	@Override
 	public Query obterQuery(String query) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		validaSessionFactory();
+		Query queryReturn = sessionFactory.getCurrentSession().createQuery(query.toString());
+		return queryReturn;
 	}
 
 	@Override
-	public List findListByQueryDinamica(String query, int inicialNoRegistro, int maximoResultado) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<T> findListByQueryDinamica(String query, int iniciaNoRegistro, int maximoResultado) throws Exception {
+		validaSessionFactory();
+		List<T> lista = new ArrayList<T>();
+		lista = sessionFactory.getCurrentSession().createQuery(query).setFirstResult(iniciaNoRegistro).setMaxResults(maximoResultado).list();
+		return lista;
 	}
 	
 	private void validaTransaction(){
@@ -216,7 +224,14 @@ public class ImplementacaoCrud<T> implements InterfaceCrud<T> {
 		sessionFactory.getCurrentSession().beginTransaction().rollback();
 	}
 
-	private void executeFlushSession() {
+	private void executeFlushSession() {	
 		sessionFactory.getCurrentSession().flush();
+	}
+	
+	@SuppressWarnings("deprecation")
+	public List<Object[]> getSQLDinamicaArray(String sql) throws Exception { 
+		validaSessionFactory();
+		List<Object[]> lista = (List<Object[]>) sessionFactory.getCurrentSession().createSQLQuery(sql).list();
+		return lista;
 	}
 }
