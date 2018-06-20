@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context reloadable="true">
+
+	<Resource
+	name = "jdbc/datasource"
+	auth="Container"
+	type="javax.sql.DataSource"
+	defaultAutoCommit="false"
+	maxActive="50"
+	maxIdle="10"
+	maxWait="10"
+	initialSize="10"
+	driverClassName="org.postgresql.Driver"
+	validationQuery="SELECT 'OK'"
+	testWhileIdle="true"
+	testOnBorrow="true"
+	numTestsPerEvectionRun="5"
+	timeBetweenEvictionMillis="5000"
+	minEvictableIdleTimeMillis="60000"
+	antiJARLocking="false"
+	antiResourceLocking="false"
+	username="postgres"
+	password="admin"
+	url="jdbc:postgresql://Localhost:5432/salavirtual?autoReconect=true"
+	/>
+	
+	
+</Context>
