@@ -5,32 +5,21 @@
 	
 <hibernate-configuration>
 	<session-factory name="sessionFactory">
-		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-		<property name="hibernate.connection.datasource">java:/comp/env/jdbc/datasource</property>
-		<property name="hibernate.default_schema">public</property>
-		<property name="hibernate.current_session_context_class">thread</property>
-		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-		<property name="hibernate.jdbc.factory_class">org.hibernate.jdbc.NonBatchingBatcherFactory</property>
-		<property name="hibernate.jdbc.batch_size"></property>
-		<property name="hibernate.cache.use_second_cache">true</property>
-		<property name="hibernate.transaction.auto_close_session">true</property>
-		<property name="hibernate.hbm2ddl.auto">update</property>
-		<property name="hibernate.show_sql">false</property>
-		<property name="hibernate.format_sql">true</property>
-		<property name="hibernate.generate_statistics">false</property>
+		
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.password">admin</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/salavirtual</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">false</property>
+        <property name="hbm2ddl.auto">update</property>
 		
 		<mapping class="entidade.Aluno"/>
 		<mapping class="entidade.Disciplina"/>
 		<mapping class="entidade.Material"/>
 		<mapping class="entidade.Professor"/>
 		<mapping class="entidade.Turma"/>
-		
-		<listener class="org.hibernate.envers.event.AuditEventListener" type="post-insert"/>
-		<listener class="org.hibernate.envers.event.AuditEventListener" type="post-update"/>
-		<listener class="org.hibernate.envers.event.AuditEventListener" type="post-delete"/>
-		<listener class="org.hibernate.envers.event.AuditEventListener" type="post-collection-recreate"/>
-		<listener class="org.hibernate.envers.event.AuditEventListener" type="post-collection-update"/>
-		<listener class="org.hibernate.envers.event.AuditEventListener" type="post-collection-remove"/>
 		
 	</session-factory>
 </hibernate-configuration>
